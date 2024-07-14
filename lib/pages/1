@@ -1,0 +1,59 @@
+return ListView.separated(
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              final data =
+                  recommendedPlaces[index].data() as Map<String, dynamic>;
+              return SizedBox(
+                width: 210,
+                child: Card(
+                  elevation: 0.4,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12),
+                    ),
+                  ),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(120),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => imageslider(
+                            image: data['image'],
+                            date: data['date'],
+                            description: data['description'],
+                          ),
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              data['image'],
+                              width: double.maxFinite,
+                              fit: BoxFit.cover,
+                              height: 250,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+            separatorBuilder: (context, index) => const Padding(
+              padding: EdgeInsets.only(right: 10),
+            ),
+            itemCount: recommendedPlaces.length,
+          );
+        },
+      ),
+    );
+  }
+}
